@@ -1,10 +1,11 @@
 package DataModel;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalTime;
 
-public abstract sealed class Task permits SimpleTask, ComplexTask {
+public abstract sealed class Task implements Serializable permits SimpleTask, ComplexTask {
 
     @Serial
     private static final long serialVersionUID = 234L;

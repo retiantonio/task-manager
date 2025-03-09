@@ -12,8 +12,8 @@ public class TaskManagement implements Serializable {
     @Serial
     private static final long serialVersionUID = 1234L;
 
-    private Map<Employee, List<Task>> hashMapTasks = new HashMap<Employee, List<Task>>();
-    private Map<Integer, Employee> hashMapEmployees = new HashMap<Integer, Employee>();
+    private Map<Employee, List<Task>> hashMapTasks = new HashMap<>();
+    private Map<Integer, Employee> hashMapEmployees = new HashMap<>();
 
     public TaskManagement() {}
 
@@ -75,6 +75,17 @@ public class TaskManagement implements Serializable {
             }
 
         return false;
+    }
+
+    public void printEmployees() {
+        if(!hashMapTasks.keySet().isEmpty())
+            for(Employee employee: hashMapTasks.keySet())
+                System.out.println(employee.getNameEmployee());
+        else System.out.println("No employee found");
+    }
+
+    public  Map<Employee, List<Task>> getTaskMap() {
+        return this.hashMapTasks;
     }
 }
 

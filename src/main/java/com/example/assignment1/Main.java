@@ -25,6 +25,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         try {
             taskManagement = AppSerialization.deserializeData();
+            System.out.println("After Deserialization: " + taskManagement.getTaskMap().keySet());
             System.out.println("Data Deserialized");
         } catch (IOException e) {
             System.out.println("Data could not be Deserialized");
@@ -49,6 +50,7 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         AppSerialization.serializeData(taskManagement);
+        taskManagement.printEmployees();
         System.out.println("Data Serialized");
     }
 
