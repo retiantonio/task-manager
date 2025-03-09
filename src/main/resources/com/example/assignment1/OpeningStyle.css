@@ -1,0 +1,63 @@
+@font-face {
+    font-family: "PoppinsBold";
+    src: url("Fonts/Poppins-Bold.ttf");
+}
+
+@font-face {
+    font-family: "PoppinsMedium";
+    src: url("Fonts/Poppins-Medium.ttf");
+}
+
+@font-face {
+    font-family: "PoppinsRegular";
+    src: url("Fonts/Poppins-Regular.ttf");
+}
+
+#rightPane {
+    -fx-background-color: linear-gradient(to right, #41564A, #537F65);
+    -fx-background-radius: 0;
+}
+
+#cornerPane {
+    -fx-background-color: white;
+    -fx-background-radius: 24;
+}
+
+#nameTextField {
+    -fx-background-color: transparent;
+    -fx-border-color: #517560;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-border-width: 2;
+    -fx-text-fill: #517560;
+    -fx-font-family: PoppinsRegular;
+}
+
+#startButton {
+    -fx-background-color: #537F65;
+    -fx-background-radius: 12;
+    -fx-font-family: PoppinsBold;
+}
+
+#startButton:hover {
+    -fx-background-color: #73A788;
+    -fx-font-family: PoppinsBold;
+}
+
+#infoLabel {
+    -fx-text-fill: #517560;
+    -fx-font-family: PoppinsMedium;
+}
+
+#logoLabel {
+    -fx-font-family: PoppinsBold;
+}
+
+#creditLabel {
+    -fx-font-family: PoppinsRegular;
+}
+
+
+
+
+

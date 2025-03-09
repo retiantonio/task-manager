@@ -1,0 +1,24 @@
+package DataModel;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+public final class SimpleTask extends Task implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 334L;
+
+    public SimpleTask(String statusTask, String nameTask, LocalTime startHour, LocalTime endHour) {
+        super(statusTask, nameTask);
+
+        this.startHour = startHour;
+        this.endHour = endHour;
+    }
+
+    //estimateDuration is inherited
+    //getStartHour inherited
+    //getEndHour inherited
+}

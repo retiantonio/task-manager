@@ -1,0 +1,11 @@
+#employeePane {
+    -fx-background-color: #41564A;
+    -fx-background-radius: 12px;
+}
+
+#employeeLabel {
+    -fx-text-fill: #73A788;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+

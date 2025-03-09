@@ -1,0 +1,23 @@
+#createEmployeeVBox {
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: #41564A;
+    -fx-background-radius: 12px;
+}
+
+#createEmployeeTF {
+    -fx-background-color: transparent;
+
+    -fx-prompt-text-fill: #73A788;
+    -fx-text-fill: #73A788;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+#createEmployeeButton {
+    -fx-background-color: linear-gradient(to right top, #73A788, #87DAA9);
+    -fx-background-radius: 8px;
+
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: #41564A;
+}
