@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public abstract sealed class Task implements Serializable permits SimpleTask, ComplexTask {
 
@@ -33,17 +34,24 @@ public abstract sealed class Task implements Serializable permits SimpleTask, Co
         return (int) duration.toMinutes();
     }
 
-    protected LocalTime getStartHour() {
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idTask);
+    }
+
+    public LocalTime getStartHour() {
         return startHour;
     }
 
-    protected LocalTime getEndHour() {
+    public LocalTime getEndHour() {
         return endHour;
     }
 
     public String getStatusTask() {
         return statusTask;
     }
+
+    public String getNameTask() { return nameTask; }
 
     public int getIDTask() {
         return idTask;

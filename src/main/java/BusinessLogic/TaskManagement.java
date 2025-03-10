@@ -61,12 +61,12 @@ public class TaskManagement implements Serializable {
         }
     }
 
-    public Set<Employee> getEmployeeSet() {
+    public Set<Employee> getEmployees() {
         return hashMapTasks.keySet();
     }
 
     public boolean employeeExists(String employeeName) {
-        Set<Employee> employeeSet = getEmployeeSet();
+        Set<Employee> employeeSet = getEmployees();
 
         if(!employeeSet.isEmpty())
             for(Employee employee : employeeSet) {
@@ -86,6 +86,28 @@ public class TaskManagement implements Serializable {
 
     public  Map<Employee, List<Task>> getTaskMap() {
         return this.hashMapTasks;
+    }
+
+    public List<Task> getTasks() {
+        List<Task> allTasks = new ArrayList<>();
+
+        for(List<Task> taskList: hashMapTasks.values()) {
+            allTasks.addAll(taskList);
+        }
+
+        return allTasks;
+    }
+
+    public List<Employee> getEmployeesWithTask(Task task) {
+        List<Employee> employeesWithTask = new ArrayList<>();
+
+        for(Map.Entry<Employee, List<Task>> entry : hashMapTasks.entrySet()) {
+            if(entry.getValue().contains(task)) {
+                employeesWithTask.add(entry.getKey());
+            }
+        }
+
+        return employeesWithTask;
     }
 }
 

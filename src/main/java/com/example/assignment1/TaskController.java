@@ -4,7 +4,6 @@ import BusinessLogic.TaskManagement;
 import DataModel.Employee;
 import DataModel.SimpleTask;
 import DataModel.Task;
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -22,7 +21,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.text.ParseException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -40,6 +38,8 @@ public class TaskController {
 
     private TaskManagement taskManagement;
 
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
     private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
     private List<Employee> selectedEmployees = new ArrayList<>();
 
@@ -51,7 +51,7 @@ public class TaskController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeSelection.fxml"));
         Parent root = loader.load();
 
-        employeeList = FXCollections.observableArrayList(new ArrayList<>(taskManagement.getEmployeeSet()));
+        employeeList = FXCollections.observableArrayList(new ArrayList<>(taskManagement.getEmployees()));
 
         EmployeeSelectController controller = loader.getController();
         controller.setEmployeeList(employeeList);
@@ -66,7 +66,7 @@ public class TaskController {
         Employee selectedEmployee = controller.getSelectedEmployee();
         selectedEmployees.add(selectedEmployee);
 
-        addUIComponent(selectedEmployee);
+        addEmployeeTag(selectedEmployee);
     }
 
     @FXML
@@ -93,7 +93,7 @@ public class TaskController {
 
 
 
-    public void addUIComponent(Employee employee) throws IOException {
+    public void addEmployeeTag(Employee employee) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Employee.fxml"));
 
         Node component = fxmlLoader.load();
@@ -104,12 +104,7 @@ public class TaskController {
         employeeVBox.getChildren().addFirst(component);
     }
 
-    public void setTaskManagement(TaskManagement taskManagement) {
-        this.taskManagement = taskManagement;
-    }
-
     private LocalTime parseTime(String input) throws ParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return LocalTime.parse(input, formatter);
     }
 
@@ -160,5 +155,16 @@ public class TaskController {
         }
 
         return false;
+    }
+
+    public void setTaskManagement(TaskManagement taskManagement) {
+        this.taskManagement = taskManagement;
+    }
+
+    public void setTaskInfo(String title, LocalTime startHour, LocalTime endHour) {
+        this.taskTitleTF.setText(title);
+
+        this.startHourTF.setText(startHour.format(formatter));
+        this.endHourTF.setText(endHour.format(formatter));
     }
 }

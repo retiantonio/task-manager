@@ -15,6 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainAppController {
 
@@ -34,7 +36,50 @@ public class MainAppController {
     @FXML
     public void addTask(ActionEvent event) throws IOException {
         appTabPane.getSelectionModel().select(taskTab);
+        createTaskNode();
+    }
 
+    @FXML
+    public void addEmployee(ActionEvent event) throws IOException {
+        appTabPane.getSelectionModel().select(employeeTab);
+
+        createEmployeeNode();
+    }
+
+    public void setTaskManagement(TaskManagement taskManagement) {
+        this.taskManagement = taskManagement;
+
+        try {
+            restoreTasks();
+            restoreEmployees();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void restoreEmployees() throws IOException {
+        for(Employee employee: taskManagement.getEmployees()) {
+            CreateEmployeeController createEmployeeController = createEmployeeNode();
+
+            createEmployeeController.setEmployeeName(employee.getNameEmployee());
+        }
+    }
+
+    private void restoreTasks() throws IOException {
+        List<Task> taskToBeRestored = taskManagement.getTasks();
+
+        for (Task task : taskToBeRestored) {
+            List<Employee> employeeList = taskManagement.getEmployeesWithTask(task);
+            TaskController taskController = createTaskNode();
+
+            taskController.setTaskInfo(task.getNameTask(), task.getStartHour(), task.getEndHour());
+
+            for (Employee employee : employeeList)
+                taskController.addEmployeeTag(employee);
+        }
+    }
+
+    private TaskController createTaskNode() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Task.fxml"));
         Node component = loader.load();
 
@@ -43,12 +88,11 @@ public class MainAppController {
 
 
         uncompletedVBox.getChildren().add(component);
+
+        return controller;
     }
 
-    @FXML
-    public void addEmployee(ActionEvent event) throws IOException {
-        appTabPane.getSelectionModel().select(employeeTab);
-
+    private CreateEmployeeController createEmployeeNode() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("create-employee.fxml"));
         Node component = loader.load();
 
@@ -57,9 +101,7 @@ public class MainAppController {
 
         employeeHBox.getChildren().add(component);
         System.out.println("Employee Added");
-    }
 
-    public void setTaskManagement(TaskManagement taskManagement) {
-        this.taskManagement = taskManagement;
+        return controller;
     }
 }

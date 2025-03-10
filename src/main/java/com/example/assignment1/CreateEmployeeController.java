@@ -20,4 +20,8 @@ public class CreateEmployeeController {
     public void setTaskManagement(TaskManagement taskManagement) {
         this.taskManagement = taskManagement;
     }
+
+    public void setEmployeeName(String employeeName) {
+        createEmployeeTF.setText(employeeName);
+    }
 }
