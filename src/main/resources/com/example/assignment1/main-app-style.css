@@ -15,18 +15,16 @@
 
 
 
-
-
 #leftPane {
     -fx-border-width: 0 2 0 0;
     -fx-border-color: #B1B0B0;
 }
 
 #topPane {
-    -fx-background-color: linear-gradient(to right, #41564A, #537F65);
+    -fx-background-color: linear-gradient(to right, #41564A, #73A788);
 }
 
-#buttonPane {
+#topButtonHBox {
     -fx-border-color: #B1B0B0;
     -fx-border-width: 0 0 1 0;
 }
@@ -41,6 +39,7 @@
 
     -fx-text-fill: #8C8686;
     -fx-font-family: PoppinsRegular;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 

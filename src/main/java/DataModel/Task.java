@@ -1,5 +1,10 @@
 package DataModel;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Duration;
@@ -39,6 +44,24 @@ public abstract sealed class Task implements Serializable permits SimpleTask, Co
         return Objects.hashCode(idTask);
     }
 
+    public void modifyTaskStatus() {
+        if(statusTask.equals("Completed"))
+            statusTask = "Uncompleted";
+        else statusTask = "Completed";
+    }
+
+    public void setTaskName(String nameTask) {
+        this.nameTask = nameTask;
+    }
+
+    public void setStartHour(LocalTime startHour) {
+        this.startHour = startHour;
+    }
+
+    public void setEndHour(LocalTime endHour) {
+        this.endHour = endHour;
+    }
+
     public LocalTime getStartHour() {
         return startHour;
     }
@@ -53,13 +76,20 @@ public abstract sealed class Task implements Serializable permits SimpleTask, Co
 
     public String getNameTask() { return nameTask; }
 
+    public IntegerProperty idTaskProperty() {
+        IntegerProperty idTaskProperty = new SimpleIntegerProperty(idTask);
+        return idTaskProperty;
+    }
+
+    public StringProperty nameTaskProperty() {
+        SimpleStringProperty nameTaskProperty = new SimpleStringProperty(nameTask);
+        return nameTaskProperty;
+    }
+
+
     public int getIDTask() {
         return idTask;
     }
 
-    public void modifyTaskStatus() {
-        if(statusTask.equals("Completed"))
-            statusTask = "Uncompleted";
-        else statusTask = "Completed";
-    }
+
 }

@@ -18,7 +18,10 @@ public class TaskManagement implements Serializable {
     public TaskManagement() {}
 
     public void assignTaskToEmployee(Employee employee, Task task) {
-        hashMapTasks.computeIfAbsent(employee, k -> new ArrayList<Task>()).add(task);
+        hashMapTasks.computeIfAbsent(employee, k -> new ArrayList<Task>());
+
+        if(!hashMapTasks.get(employee).contains(task))
+            hashMapTasks.get(employee).add(task);
     }
 
     public int calculateEmployeeWorkDuration(int idEmployee) {
@@ -90,10 +93,12 @@ public class TaskManagement implements Serializable {
 
     public List<Task> getTasks() {
         List<Task> allTasks = new ArrayList<>();
+        Set<Task> duplicateCollision = new HashSet<>();
 
-        for(List<Task> taskList: hashMapTasks.values()) {
-            allTasks.addAll(taskList);
-        }
+        for(List<Task> taskList: hashMapTasks.values())
+            for(Task task: taskList)
+                if(duplicateCollision.add(task))
+                    allTasks.add(task);
 
         return allTasks;
     }

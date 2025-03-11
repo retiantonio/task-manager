@@ -1,0 +1,67 @@
+#complexTaskMainVBox {
+    -fx-background-radius: 12px;
+    -fx-background-color: #E8E7E7;
+}
+
+#complexTaskTitleTF {
+    -fx-background-color: TRANSPARENT;
+
+    -fx-text-fill: #8C8686;
+    -fx-prompt-text-fill: #8C8686;
+    -fx-font-size: 16px;
+    -fx-font-weight: BOLD;
+}
+
+#startHourLabel {
+    -fx-text-fill: #B1B0B0;
+
+    -fx-font-size: 12px;
+    -fx-font-weight: BOLD;
+}
+
+#endHourLabel {
+    -fx-text-fill: #B1B0B0;
+
+    -fx-font-size: 12px;
+    -fx-font-weight: BOLD;
+}
+
+#assignTaskButton {
+    -fx-background-color: transparent;
+
+    -fx-font-weight: bold;
+    -fx-font-family: PoppinsBold;
+    -fx-font-size: 12px;
+    -fx-text-fill: #B1B0B0;
+}
+
+#assignTaskButton:hover {
+    -fx-background-color: #B1B0B0;
+    -fx-background-radius: 12 12 12 12;
+
+    -fx-border-color: #B1B0B0;
+    -fx-border-radius: 12 12 12 12;
+
+    -fx-text-fill: #8C8686;
+}
+
+#complexEstimatedTimeLabel {
+    -fx-text-fill: #B1B0B0;
+
+    -fx-font-size: 12px;
+    -fx-font-weight: BOLD;
+}
+
+#complexTaskSaveButton {
+    -fx-background-color: linear-gradient(to right top, #537F65, #87DAA9);
+    -fx-background-radius: 10px;
+
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: BOLD;
+}
+
+#complexTaskSaveButton:hover {
+    -fx-background-color: linear-gradient(to right top, #73A788, #9CE8BB);
+}
+

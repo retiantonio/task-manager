@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="complexTaskMainVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" stylesheets="@CSS-Styling/complex-task-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.assignment1.ComplexTaskController">
+   <children>
+      <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bars-progress-solid.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="complexTaskTitleTF" promptText="Complex Task.." />
+         </children>
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin>
+      </HBox>
+      <VBox fx:id="containedTasksVBox" spacing="5.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="assignTaskButton" mnemonicParsing="false" onAction="#addAssignedTask" text="Add Task" />
+         </children>
+      </VBox>
+      <Label fx:id="startHourLabel" text="Starting at.. (Automatic)">
+         <VBox.margin>
+            <Insets left="7.0" />
+         </VBox.margin></Label>
+      <Label fx:id="endHourLabel" text="Due.. (Automatic)">
+         <VBox.margin>
+            <Insets left="7.0" />
+         </VBox.margin></Label>
+      <Label fx:id="complexEstimatedTimeLabel" text="Estimation Duration.. (Automatic)">
+         <VBox.margin>
+            <Insets left="7.0" />
+         </VBox.margin>
+      </Label>
+      <HBox alignment="CENTER_RIGHT" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="complexTaskSaveButton" mnemonicParsing="false" onAction="#saveComplexTask" text="Save">
+               <graphic>
+                  <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@square-check-regular.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="7.0" left="5.0" right="5.0" top="7.0" />
+   </padding>
+</VBox>

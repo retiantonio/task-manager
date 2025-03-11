@@ -1,7 +1,6 @@
 package com.example.assignment1;
 
 import BusinessLogic.TaskManagement;
-import DataAccess.AppSerialization;
 import DataModel.Employee;
 import DataModel.Task;
 import javafx.event.ActionEvent;
@@ -10,12 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainAppController {
@@ -46,22 +43,17 @@ public class MainAppController {
         createEmployeeNode();
     }
 
-    public void setTaskManagement(TaskManagement taskManagement) {
-        this.taskManagement = taskManagement;
-
-        try {
-            restoreTasks();
-            restoreEmployees();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    public void addComplexTask(ActionEvent event) throws IOException {
+        appTabPane.getSelectionModel().select(taskTab);
+        createComplexTaskNode();
     }
 
     private void restoreEmployees() throws IOException {
         for(Employee employee: taskManagement.getEmployees()) {
             CreateEmployeeController createEmployeeController = createEmployeeNode();
 
-            createEmployeeController.setEmployeeName(employee.getNameEmployee());
+            createEmployeeController.restoreEmployee(employee.getNameEmployee());
         }
     }
 
@@ -72,7 +64,7 @@ public class MainAppController {
             List<Employee> employeeList = taskManagement.getEmployeesWithTask(task);
             TaskController taskController = createTaskNode();
 
-            taskController.setTaskInfo(task.getNameTask(), task.getStartHour(), task.getEndHour());
+            taskController.restoreTask(task, employeeList);
 
             for (Employee employee : employeeList)
                 taskController.addEmployeeTag(employee);
@@ -103,5 +95,26 @@ public class MainAppController {
         System.out.println("Employee Added");
 
         return controller;
+    }
+
+    private void createComplexTaskNode() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("complex-task.fxml"));
+        Node component = loader.load();
+
+        ComplexTaskController controller = loader.getController();
+        controller.setTaskManagement(taskManagement);
+
+        uncompletedVBox.getChildren().add(1, component);
+    }
+
+    public void setTaskManagement(TaskManagement taskManagement) {
+        this.taskManagement = taskManagement;
+
+        try {
+            restoreTasks();
+            restoreEmployees();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

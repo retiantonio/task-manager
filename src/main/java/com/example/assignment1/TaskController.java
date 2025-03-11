@@ -40,6 +40,9 @@ public class TaskController {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
+    private boolean isExisting = false;
+    private Task taskObject;
+
     private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
     private List<Employee> selectedEmployees = new ArrayList<>();
 
@@ -78,13 +81,24 @@ public class TaskController {
         boolean isItFirst = true;
 
         try {
+
             startHour = parseTime(startHourTF.getText());
             isItFirst = false;
             endHour = parseTime(endHourTF.getText());
 
-            task = new SimpleTask("Uncompleted", taskTitleTF.getText(), startHour, endHour);
-            for(Employee employee : selectedEmployees)
-                taskManagement.assignTaskToEmployee(employee, task);
+            if(isExisting) {
+                taskObject.setTaskName(taskTitleTF.getText());
+                taskObject.setStartHour(startHour);
+                taskObject.setEndHour(endHour);
+
+                for(Employee employee : selectedEmployees)
+                    taskManagement.assignTaskToEmployee(employee, taskObject);
+            } else {
+                taskObject = new SimpleTask("Uncompleted", taskTitleTF.getText(), startHour, endHour);
+                for(Employee employee : selectedEmployees)
+                    taskManagement.assignTaskToEmployee(employee, taskObject);
+                isExisting = true;
+            }
         } catch (ParseException | DateTimeParseException exception) {
             inputExceptionAnimation(isItFirst);
         }
@@ -161,10 +175,16 @@ public class TaskController {
         this.taskManagement = taskManagement;
     }
 
-    public void setTaskInfo(String title, LocalTime startHour, LocalTime endHour) {
-        this.taskTitleTF.setText(title);
+    public void restoreTask(Task task, List<Employee> employeeList) {
+        isExisting = true;
 
-        this.startHourTF.setText(startHour.format(formatter));
-        this.endHourTF.setText(endHour.format(formatter));
+        taskObject = task;
+
+        selectedEmployees = employeeList;
+
+        this.taskTitleTF.setText(task.getNameTask());
+
+        this.startHourTF.setText(task.getStartHour().format(formatter));
+        this.endHourTF.setText(task.getEndHour().format(formatter));
     }
 }

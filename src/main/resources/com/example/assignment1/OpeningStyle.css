@@ -14,7 +14,7 @@
 }
 
 #rightPane {
-    -fx-background-color: linear-gradient(to right, #41564A, #537F65);
+    -fx-background-color: linear-gradient(to right, #41564A, #73A788);
     -fx-background-radius: 0;
 }
 
@@ -36,12 +36,16 @@
 #startButton {
     -fx-background-color: #537F65;
     -fx-background-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
     -fx-font-family: PoppinsBold;
 }
 
 #startButton:hover {
     -fx-background-color: #73A788;
     -fx-font-family: PoppinsBold;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
 }
 
 #infoLabel {

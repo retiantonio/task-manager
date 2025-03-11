@@ -26,10 +26,7 @@ public class EmployeeSelectController {
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameEmployeeProperty());
     }
 
-    public void setEmployeeList(ObservableList<Employee> employees) {
-        employeeTable.setItems(employees);
-    }
-
+    @FXML
     public void confirmEmployee(ActionEvent event) {
         selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
 
@@ -37,7 +34,9 @@ public class EmployeeSelectController {
             ((Stage) selectButton.getScene().getWindow()).close();
     }
 
+    public void setEmployeeList(ObservableList<Employee> employees) {
+        employeeTable.setItems(employees);
+    }
+
     public Employee getSelectedEmployee() { return selectedEmployee; }
-
-
 }

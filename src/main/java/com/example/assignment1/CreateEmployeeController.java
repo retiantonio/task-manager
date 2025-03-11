@@ -1,7 +1,6 @@
 package com.example.assignment1;
 
 import BusinessLogic.TaskManagement;
-import DataModel.Employee;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -21,7 +20,7 @@ public class CreateEmployeeController {
         this.taskManagement = taskManagement;
     }
 
-    public void setEmployeeName(String employeeName) {
+    public void restoreEmployee(String employeeName) {
         createEmployeeTF.setText(employeeName);
     }
 }
