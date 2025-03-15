@@ -1,4 +1,4 @@
-#mainVBox {
+#taskMainVBox {
     -fx-background-color: D9D9D9;
     -fx-background-radius: 12px;
 }
@@ -47,6 +47,19 @@
     -fx-font-weight: bold;
 }
 
+
+#estimatedTimeLabel {
+    -fx-text-fill: #8C8686;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+#taskLabel {
+    -fx-text-fill: #8C8686;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
 #taskSaveButton {
     -fx-background-color: linear-gradient(to right top, #41564A, #73A788);
     -fx-background-radius: 10px;
@@ -58,4 +71,9 @@
 
 #taskSaveButton:hover {
     -fx-background-color: linear-gradient(to right top, #537F65, #87DAA9);
+}
+
+#simpleCompleteButton {
+    -fx-background-color: linear-gradient(to right top, #41564A, #73A788);
+    -fx-background-radius: 12;
 }

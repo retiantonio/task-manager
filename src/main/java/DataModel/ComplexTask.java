@@ -11,14 +11,15 @@ public final class ComplexTask extends Task implements Serializable {
     @Serial
     private static final long serialVersionUID = 713L;
 
-    List<Task> subTasks = new ArrayList<>();
+    private List<Task> subTasks = new ArrayList<>();
 
     public ComplexTask(String statusTask, String nameTask) {
         super(statusTask, nameTask);
     }
 
     public void addTask(Task task) {
-        subTasks.add(task);
+        if(!subTasks.contains(task))
+            subTasks.add(task);
     }
 
     public void removeTask(Task task) {
@@ -57,5 +58,17 @@ public final class ComplexTask extends Task implements Serializable {
         }
 
         return endHour;
+    }
+
+    public List<Task> getSubTasks() {
+        return subTasks;
+    }
+
+    public void modifyTaskStatus() {
+        if(statusTask.equals("Uncompleted"))
+            statusTask = "Completed";
+
+        for(Task task : subTasks)
+            task.modifyTaskStatus();
     }
 }

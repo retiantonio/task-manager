@@ -26,6 +26,13 @@
     -fx-font-weight: BOLD;
 }
 
+#complexTaskLabel {
+    -fx-text-fill: #B1B0B0;
+
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
 #assignTaskButton {
     -fx-background-color: transparent;
 
@@ -63,5 +70,10 @@
 
 #complexTaskSaveButton:hover {
     -fx-background-color: linear-gradient(to right top, #73A788, #9CE8BB);
+}
+
+#complexCompleteButton {
+    -fx-background-color: linear-gradient(to right top, #537F65, #87DAA9);
+    -fx-background-radius: 12;
 }
 

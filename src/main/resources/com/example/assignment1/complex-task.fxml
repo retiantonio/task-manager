@@ -19,6 +19,15 @@
                </image>
             </ImageView>
             <TextField fx:id="complexTaskTitleTF" promptText="Complex Task.." />
+            <Button fx:id="complexCompleteButton" mnemonicParsing="false" onAction="#completeComplexTask">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@check-double-solid.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
          <VBox.margin>
             <Insets left="5.0" />
@@ -29,19 +38,33 @@
             <Button fx:id="assignTaskButton" mnemonicParsing="false" onAction="#addAssignedTask" text="Add Task" />
          </children>
       </VBox>
-      <Label fx:id="startHourLabel" text="Starting at.. (Automatic)">
-         <VBox.margin>
-            <Insets left="7.0" />
-         </VBox.margin></Label>
-      <Label fx:id="endHourLabel" text="Due.. (Automatic)">
-         <VBox.margin>
-            <Insets left="7.0" />
-         </VBox.margin></Label>
-      <Label fx:id="complexEstimatedTimeLabel" text="Estimation Duration.. (Automatic)">
+      <HBox alignment="CENTER_LEFT" spacing="8.0">
+         <children>
+            <Label fx:id="complexTaskLabel" text="Starting:" />
+            <Label fx:id="startHourLabel" text="(Automatic)" />
+         </children>
          <VBox.margin>
             <Insets left="7.0" />
          </VBox.margin>
-      </Label>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="8.0">
+         <children>
+            <Label fx:id="complexTaskLabel" text="Due:" />
+            <Label fx:id="endHourLabel" text="(Automatic)" />
+         </children>
+         <VBox.margin>
+            <Insets left="7.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="8.0">
+         <children>
+            <Label fx:id="complexTaskLabel" text="Estimated Time:" />
+            <Label fx:id="complexEstimatedTimeLabel" text="(Automatic)" />
+         </children>
+         <VBox.margin>
+            <Insets left="7.0" />
+         </VBox.margin>
+      </HBox>
       <HBox alignment="CENTER_RIGHT" VBox.vgrow="ALWAYS">
          <children>
             <Button fx:id="complexTaskSaveButton" mnemonicParsing="false" onAction="#saveComplexTask" text="Save">

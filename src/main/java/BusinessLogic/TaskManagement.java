@@ -24,6 +24,10 @@ public class TaskManagement implements Serializable {
             hashMapTasks.get(employee).add(task);
     }
 
+    public void removeTaskFromEmployee(Employee employee, Task task) {
+        hashMapTasks.get(employee).remove(task);
+    }
+
     public int calculateEmployeeWorkDuration(int idEmployee) {
         int workDuration = -1;
 
@@ -64,12 +68,12 @@ public class TaskManagement implements Serializable {
         }
     }
 
-    public Set<Employee> getEmployees() {
-        return hashMapTasks.keySet();
+    public List<Employee> getEmployees() {
+        return new ArrayList<>(hashMapTasks.keySet());
     }
 
     public boolean employeeExists(String employeeName) {
-        Set<Employee> employeeSet = getEmployees();
+        List<Employee> employeeSet = getEmployees();
 
         if(!employeeSet.isEmpty())
             for(Employee employee : employeeSet) {
