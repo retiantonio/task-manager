@@ -15,11 +15,13 @@
 
 #leftPane {
     -fx-border-width: 0 2 0 0;
-    -fx-border-color: #B1B0B0;
+    -fx-border-color: #41564A;
 }
 
 #topPane {
     -fx-background-color: linear-gradient(to right, #41564A, #73A788);
+    -fx-border-color: #41564A;
+    -fx-border-width: 0 0 2 0;
 }
 
 #topButtonHBox {
@@ -72,27 +74,35 @@
 .tab {
     -fx-background-insets: 0 1 0 1,0,0;
     -fx-background-radius: 32 32 0 0;
+    -fx-background-color: #537F65;
 }
+
+.tab-pane .tab:focused {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 .tab-pane .tab {
-    -fx-background-color: transparent;
     -fx-border-color: #537F65;
+    -fx-background-color: #537F65;
     -fx-border-radius: 32 32 0 0;
     -fx-border-width: 2 2 0 2;
 }
 
 .tab-pane .tab:selected {
-    -fx-background-color: #537F65;
+    -fx-background-color: #FFFFFF;
 }
 
 .tab .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: #537F65;
+    -fx-text-fill: #FFFFFF;
     -fx-font-weight: BOLD;
 }
 
 .tab:selected .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: white;
+    -fx-text-fill: #537F65;
 }
 
 .tab-pane .tab-header-area .tab .tab-container {
@@ -103,6 +113,16 @@
     -fx-background-insets: 0, 0 0 1 0;
     /* -fx-padding: 0.416667em 0.166667em 0.0em 0.833em; /* 5 2 0 10 */
     -fx-padding: 0.416667em 0.166667em 0.0em 0.0em; /* overridden as 5 2 0 0 */
+}
+
+#mainHBox {
+    -fx-background-image: url("backgroundTry2.png");
+    -fx-background-size: 150% 150%;
+}
+
+#employeeHBox {
+    -fx-background-image: url("backgroundTry2.png");
+    -fx-background-size: 150% 150%;
 }
 
 #uncompletedLabel {
@@ -134,10 +154,10 @@
 }
 
 #welcomeLabel {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: linear-gradient(to right, #537F65, #FFFFFF);
     -fx-font-weight: BOLD;
     -fx-font-family: PoppinsBold;
-    -fx-font-size: 16px;
+    -fx-font-size: 20px;
     -fx-alignment: center;
 }
 

@@ -27,6 +27,21 @@
                         <Image url="@photo-1628945975014-63bf1017ae01%201%20(1).png" />
                      </image>
                   </ImageView>
+                  <Label layoutX="102.0" layoutY="719.0" text="Developed and Designed by Reti Antonio" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@copyright.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="1.0" />
+                           </effect>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
                   <Label fx:id="welcomeLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="67.0" layoutY="78.0" prefHeight="335.0" prefWidth="310.0" text="Label" textAlignment="CENTER" wrapText="true" />
                </children></Pane>
          </left>
