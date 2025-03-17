@@ -1,47 +1,41 @@
-#createEmployeeVBox {
+#employeeStatisticsVBox {
     -fx-padding: 10 10 10 10;
-    -fx-background-color: #66987A;
+    -fx-background-color: #73A788;
     -fx-background-radius: 12px;
 }
 
-#createEmployeeTF {
-    -fx-background-color: transparent;
-
-    -fx-prompt-text-fill: #2F3C35;
+#employeeStatisticsNameLabel {
     -fx-text-fill: #2F3C35;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
-#createEmployeeLabel {
+#employeeStatisticsLabel {
     -fx-text-fill: #41564A;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
-#createEmployeeUncompletedLabel {
+#employeeStatisticsRankLabel {
     -fx-text-fill: #41564A;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
-#createEmployeeCompletedLabel {
+#employeeStatisticsWorkDurationLabel {
     -fx-text-fill: #41564A;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
-#createEmployeeWorkDurationLabel {
+#employeeStatisticsCompletedLabel {
     -fx-text-fill: #41564A;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
-#createEmployeeButton {
-    -fx-background-color: linear-gradient(to right top, #2F3C35, #537F65);
-    -fx-background-radius: 8px;
-
-    -fx-font-weight: bold;
+#employeeStatisticsUncompletedLabel {
+    -fx-text-fill: #41564A;
     -fx-font-size: 12px;
-    -fx-text-fill: #9CE8BB;
+    -fx-font-weight: bold;
 }

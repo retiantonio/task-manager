@@ -20,12 +20,20 @@
    <children>
       <BorderPane prefHeight="800.0" prefWidth="1200.0">
          <left>
-            <Pane fx:id="leftPane" prefHeight="751.0" prefWidth="48.0" stylesheets="@main-app-style.css" BorderPane.alignment="CENTER" />
+            <Pane fx:id="leftPane" prefHeight="750.0" prefWidth="453.0" stylesheets="@main-app-style.css" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="750.0" fitWidth="459.0" layoutX="-8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@photo-1628945975014-63bf1017ae01%201%20(1).png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="welcomeLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="67.0" layoutY="78.0" prefHeight="335.0" prefWidth="310.0" text="Label" textAlignment="CENTER" wrapText="true" />
+               </children></Pane>
          </left>
          <top>
-            <Pane fx:id="topPane" prefHeight="49.0" prefWidth="1200.0" stylesheets="@main-app-style.css" BorderPane.alignment="CENTER">
+            <Pane fx:id="topPane" prefHeight="50.0" stylesheets="@main-app-style.css" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="logoLabel" alignment="CENTER" layoutY="7.0" prefHeight="31.0" prefWidth="179.0" stylesheets="@OpeningStyle.css" text="Task Master" textFill="WHITE">
+                  <Label fx:id="logoLabel" alignment="CENTER" layoutX="14.0" layoutY="8.0" prefHeight="31.0" prefWidth="179.0" stylesheets="@OpeningStyle.css" text="Task Master" textFill="WHITE">
                      <font>
                         <Font name="Monospaced Bold" size="24.0" />
                      </font>
@@ -52,11 +60,11 @@
                            <content>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <ScrollPane prefHeight="683.0" prefWidth="1152.0">
+                                    <ScrollPane hbarPolicy="NEVER" layoutX="-1.0" prefHeight="687.0" prefWidth="744.0">
                                        <content>
-                                          <HBox fx:id="mainHBox" prefHeight="681.0" prefWidth="1137.0">
+                                          <HBox fx:id="mainHBox" alignment="TOP_CENTER" prefHeight="685.0" prefWidth="749.0" spacing="15.0">
                                              <children>
-                                                <VBox fx:id="uncompletedVBox" alignment="TOP_CENTER" spacing="10.0">
+                                                <VBox fx:id="uncompletedVBox" alignment="TOP_CENTER" prefWidth="292.0" spacing="10.0">
                                                    <children>
                                                       <Label fx:id="uncompletedLabel" alignment="CENTER" text="Uncompleted" />
                                                    </children>
@@ -64,7 +72,7 @@
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox fx:id="completedVBox" alignment="TOP_CENTER" spacing="10.0">
+                                                <VBox fx:id="completedVBox" alignment="TOP_CENTER" prefWidth="292.0" spacing="10.0">
                                                    <children>
                                                       <Label fx:id="completedLabel" alignment="CENTER" text="Completed" />
                                                    </children>
@@ -73,6 +81,9 @@
                                                    </padding>
                                                 </VBox>
                                              </children>
+                                             <padding>
+                                                <Insets left="15.0" right="15.0" top="15.0" />
+                                             </padding>
                                           </HBox>
                                        </content>
                                     </ScrollPane>
@@ -84,18 +95,42 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <HBox fx:id="employeeHBox" spacing="10.0">
-                                       <padding>
-                                          <Insets bottom="10.0" top="10.0" />
-                                       </padding></HBox>
-                                 </children></AnchorPane>
+                                    <ScrollPane>
+                                       <content>
+                                          <HBox fx:id="employeeHBox" alignment="TOP_CENTER" prefHeight="683.0" prefWidth="746.0" spacing="15.0">
+                                             <padding>
+                                                <Insets left="15.0" right="15.0" top="15.0" />
+                                             </padding>
+                                             <children>
+                                                <VBox fx:id="employeeVBox" alignment="TOP_CENTER" prefWidth="292.0" spacing="10.0">
+                                                   <padding>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label fx:id="employeeListLabel" text="Employee List" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox fx:id="statisticsVBox" alignment="TOP_CENTER" prefWidth="292.0" spacing="10.0">
+                                                   <children>
+                                                      <Label fx:id="employeeStatisticsLabel" text="Employee Statistics" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
                         </content>
                       </Tab>
                     </tabs>
                   </TabPane>
                </center>
                <top>
-                  <HBox fx:id="topButtonHBox" alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+                  <HBox fx:id="topButtonHBox" alignment="CENTER_LEFT" prefHeight="30.0" BorderPane.alignment="CENTER_LEFT">
                      <children>
                         <Button fx:id="topButton" mnemonicParsing="false" onAction="#addTask" stylesheets="@main-app-style.css" text="Add Task" HBox.hgrow="ALWAYS">
                            <graphic>

@@ -1,4 +1,4 @@
-package DataModel;
+package dataModel;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,8 +13,8 @@ public final class ComplexTask extends Task implements Serializable {
 
     private List<Task> subTasks = new ArrayList<>();
 
-    public ComplexTask(String statusTask, String nameTask) {
-        super(statusTask, nameTask);
+    public ComplexTask(int idTask, String statusTask, String nameTask) {
+        super(idTask, statusTask, nameTask);
     }
 
     public void addTask(Task task) {
@@ -29,7 +29,7 @@ public final class ComplexTask extends Task implements Serializable {
     //estimateDuration inherited
 
     public LocalTime getStartHour() {
-        LocalTime startHour = subTasks.getFirst().startHour;
+        LocalTime startHour = subTasks.getFirst().getStartHour();
 
         for(int i = 0; i < subTasks.size(); i++) {
             if(subTasks.get(i).getStartHour().getHour() < startHour.getHour()) {
@@ -45,14 +45,14 @@ public final class ComplexTask extends Task implements Serializable {
     }
 
     public LocalTime getEndHour() {
-        LocalTime endHour = subTasks.getFirst().endHour;
+        LocalTime endHour = subTasks.getFirst().getEndHour();
 
         for(int i = 0; i < subTasks.size(); i++) {
-            if(subTasks.get(i).getStartHour().getHour() > endHour.getHour()) {
-                endHour = subTasks.get(i).getStartHour();
-            } else if(subTasks.get(i).getStartHour().getHour() == endHour.getHour()) {
-                if(subTasks.get(i).getStartHour().getMinute() > endHour.getMinute()) {
-                    endHour = subTasks.get(i).getStartHour();
+            if(subTasks.get(i).getEndHour().getHour() > endHour.getHour()) {
+                endHour = subTasks.get(i).getEndHour();
+            } else if(subTasks.get(i).getEndHour().getHour() == endHour.getHour()) {
+                if(subTasks.get(i).getEndHour().getMinute() > endHour.getMinute()) {
+                    endHour = subTasks.get(i).getEndHour();
                 }
             }
         }

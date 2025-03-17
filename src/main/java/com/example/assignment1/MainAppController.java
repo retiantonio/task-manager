@@ -1,18 +1,19 @@
 package com.example.assignment1;
 
-import BusinessLogic.TaskManagement;
-import DataModel.ComplexTask;
-import DataModel.Employee;
-import DataModel.SimpleTask;
-import DataModel.Task;
+import businessLogic.TaskManagement;
+import businessLogic.Utility;
+import dataModel.ComplexTask;
+import dataModel.Employee;
+import dataModel.SimpleTask;
+import dataModel.Task;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -25,23 +26,26 @@ public class MainAppController {
 
     private Thread updateThread;
 
-    List<TaskController> simpleTaskControllers = new ArrayList<>();
-    List<ComplexTaskController> complexTaskControllers = new ArrayList<>();
-
-    @FXML private HBox mainHBox;
-    @FXML private HBox employeeHBox;
+    private List<TaskController> simpleTaskControllers = new ArrayList<>();
+    private List<ComplexTaskController> complexTaskControllers = new ArrayList<>();
+    private List<CreateEmployeeController> createEmployeeControllers = new ArrayList<>();
+    private List<EmployeeStatisticsController> employeeStatisticsControllerList = new ArrayList<>();
 
     @FXML private VBox uncompletedVBox;
     @FXML private VBox completedVBox;
+    @FXML private VBox employeeVBox;
+    @FXML private VBox statisticsVBox;
 
     @FXML private TabPane appTabPane;
 
     @FXML private Tab taskTab;
     @FXML private Tab employeeTab;
 
+    @FXML private Label welcomeLabel;
+
     private void updateComplexTask() {
         for(ComplexTaskController controller : complexTaskControllers) {
-            if(controller.isTaskCompleted()) {
+            if(controller.isCompleted()) {
                 Node component = controller.getComponentReference();
                 if(!completedVBox.getChildren().contains(component))
                     completedVBox.getChildren().add(component);
@@ -50,12 +54,48 @@ public class MainAppController {
     }
 
     private void updateSimpleTask() {
+        //System.out.println(simpleTaskControllers);
         for(TaskController controller : simpleTaskControllers)
-            if(controller.isTaskCompleted()) {
+            if(controller.isCompleted()) {
                 Node component = controller.getComponentReference();
                 if(!completedVBox.getChildren().contains(component))
                     completedVBox.getChildren().add(component);
             }
+    }
+
+    private void updateEmployee() {
+        for(CreateEmployeeController controller : createEmployeeControllers) {
+            try {
+                controller.updateEmployeeTag();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    private void updateEmployeeStatistics() {
+        for(EmployeeStatisticsController controller : employeeStatisticsControllerList) {
+            Node component = controller.getComponentReference();
+            statisticsVBox.getChildren().remove(component);
+        }
+
+        try {
+            restoreEmployeesStatistics();
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateComplexTag() {
+        for(ComplexTaskController complexController : complexTaskControllers) {
+            if(complexController.needUpdate()) {
+                System.out.println("Updating Complex Tag");
+                for (ComplexTagController tagController : complexController.getComplexTagControllers()) {
+                    tagController.updateNameTag();
+                }
+                complexController.resetUpdateNeeds();
+            }
+        }
     }
 
     @FXML
@@ -81,12 +121,28 @@ public class MainAppController {
             //get ALL employees and RESTORE them
         for(Employee employee: taskManagement.getEmployees()) {
             CreateEmployeeController createEmployeeController = createEmployeeNode();
-            createEmployeeController.restoreEmployee(employee.getNameEmployee());
+            createEmployeeController.restoreEmployee(employee);
+        }
+    }
+
+    private void restoreEmployeesStatistics() throws IOException {
+        List<Employee> employeeList = Utility.employeeProductivitySort(taskManagement);
+
+        for(Employee employee : employeeList) {
+            EmployeeStatisticsController createEmployeeController = createEmployeeStatisticsNode();
+            createEmployeeController.restoreEmployeeStatistics(employee, employeeList.indexOf(employee), employeeList.size());
         }
     }
 
     private void restoreTasks() throws IOException {
-        for (Task task : taskManagement.getTasks()) {
+        List<Task> tasksToBeRestored = taskManagement.getTasks();
+        List<Task> taskIterator = new ArrayList<>(tasksToBeRestored);
+
+        for(Task task : taskIterator)
+            if(task instanceof ComplexTask)
+                tasksToBeRestored.addAll(taskManagement.recursiveGetComplexSubTasks(((ComplexTask) task).getSubTasks()));
+
+        for (Task task : tasksToBeRestored) {
             if(task instanceof SimpleTask) {
                     //Simple Task Restore
                 TaskController taskController = createTaskNode();
@@ -109,6 +165,11 @@ public class MainAppController {
 
         simpleTaskControllers.add(controller);
 
+        System.out.println("In main: " + simpleTaskControllers.size());
+        for(ComplexTaskController complexTaskController : complexTaskControllers) {
+            complexTaskController.printList();
+        }
+
         uncompletedVBox.getChildren().add(component);
 
         return controller;
@@ -123,6 +184,7 @@ public class MainAppController {
         controller.setComponentReference(component);
 
         complexTaskControllers.add(controller);
+        controller.setTaskControllers(simpleTaskControllers, complexTaskControllers);
 
         uncompletedVBox.getChildren().add(1, component);
 
@@ -135,9 +197,27 @@ public class MainAppController {
 
         CreateEmployeeController controller = loader.getController();
         controller.setTaskManagement(taskManagement);
+        controller.setComponentReference(component);
 
-        employeeHBox.getChildren().add(component);
+        createEmployeeControllers.add(controller);
+
+        employeeVBox.getChildren().add(component);
         System.out.println("Employee Added");
+
+        return controller;
+    }
+
+    private EmployeeStatisticsController createEmployeeStatisticsNode() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("employee-statistics.fxml"));
+        Node component = loader.load();
+
+        EmployeeStatisticsController controller = loader.getController();
+        controller.setTaskManagement(taskManagement);
+        controller.setComponentReference(component);
+
+        employeeStatisticsControllerList.add(controller);
+
+        statisticsVBox.getChildren().add(component);
 
         return controller;
     }
@@ -148,16 +228,22 @@ public class MainAppController {
         try {
             restoreTasks();
 
-            for(ComplexTaskController complexTaskController : complexTaskControllers) {
-                complexTaskController.setTaskControllers(simpleTaskControllers);
-            }
+            for(ComplexTaskController complexTaskController : complexTaskControllers)
+                complexTaskController.setTaskControllers(simpleTaskControllers, complexTaskControllers);
 
             restoreEmployees();
+            restoreEmployeesStatistics();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         startUpdateThread();
+    }
+
+    public void setUpWelcomeLabel(String name) {
+        if(name.isBlank()) {
+            welcomeLabel.setText("Welcome back, manager!\nStart managing your employees right now using Task Master!");
+        } else welcomeLabel.setText("Welcome back, manager " + name + "!\n Start managing your employees right now using Task Master!");
     }
 
     private void startUpdateThread() {
@@ -166,8 +252,12 @@ public class MainAppController {
                Platform.runLater(() -> {
                    updateComplexTask();
                    updateSimpleTask();
-               });
+                   updateComplexTag();
 
+                   updateEmployee();
+                   if(appTabPane.getSelectionModel().getSelectedItem().equals(employeeTab))
+                       updateEmployeeStatistics();
+               } );
                try {
                    Thread.sleep(500);
                } catch (InterruptedException e) {

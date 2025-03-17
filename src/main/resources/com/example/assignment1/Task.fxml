@@ -60,7 +60,7 @@
             <Insets left="7.0" />
          </VBox.margin>
       </HBox>
-      <VBox fx:id="employeeVBox" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" prefHeight="28.0" prefWidth="215.0" spacing="5.0" VBox.vgrow="ALWAYS">
+      <VBox fx:id="taskEmployeeVBox" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" prefHeight="28.0" prefWidth="215.0" spacing="5.0" VBox.vgrow="ALWAYS">
          <children>
             <Button fx:id="assignButton" mnemonicParsing="false" onAction="#addEmployeeToTask" prefHeight="35.0" prefWidth="122.0" stylesheets="@CSS-Styling/task-style.css" text="Add Employee">
                <graphic>

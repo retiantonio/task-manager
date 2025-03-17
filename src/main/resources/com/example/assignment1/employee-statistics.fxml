@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="employeeStatisticsVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="2.0" stylesheets="@CSS-Styling/employee-statistics.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.assignment1.EmployeeStatisticsController">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="8.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+               <image>
+                  <Image url="@circle-user-regular.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="employeeStatisticsNameLabel" text="Name.." HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="8.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="employeeStatisticsLabel" text="Productivity Rank:" HBox.hgrow="ALWAYS" />
+            <Label fx:id="employeeStatisticsRankLabel" text="#Rank" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+      <HBox spacing="8.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="employeeStatisticsLabel" text="Uncompleted Tasks:" />
+            <Label fx:id="employeeStatisticsUncompletedLabel" text="Number" />
+         </children>
+      </HBox>
+      <HBox spacing="8.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="employeeStatisticsLabel" text="Completed Tasks:" />
+            <Label fx:id="employeeStatisticsCompletedLabel" text="Number" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="8.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="employeeStatisticsLabel" text="Work Duration:" HBox.hgrow="ALWAYS" />
+            <Label fx:id="employeeStatisticsWorkDurationLabel" text="(Automatic)" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

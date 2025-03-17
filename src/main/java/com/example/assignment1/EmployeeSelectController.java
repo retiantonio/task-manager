@@ -1,6 +1,6 @@
 package com.example.assignment1;
 
-import DataModel.Employee;
+import dataModel.Employee;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

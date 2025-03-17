@@ -13,8 +13,6 @@
     src: url("Fonts/Poppins-Regular.ttf");
 }
 
-
-
 #leftPane {
     -fx-border-width: 0 2 0 0;
     -fx-border-color: #B1B0B0;
@@ -108,15 +106,61 @@
 }
 
 #uncompletedLabel {
-    -fx-text-fill: #746D6D;
+    -fx-text-fill: #41564A;
     -fx-font-weight: bold;
     -fx-font-family: PoppinsBold;
     -fx-font-size: 16px;
 }
 
 #completedLabel {
-    -fx-text-fill: #73A788;
+    -fx-text-fill: #8FB8A0;
     -fx-font-weight: bold;
     -fx-font-family: PoppinsBold;
     -fx-font-size: 16px;
+}
+
+#employeeStatisticsLabel {
+    -fx-text-fill: #8FB8A0;
+    -fx-font-weight: bold;
+    -fx-font-family: PoppinsBold;
+    -fx-font-size: 16px;
+}
+
+#employeeListLabel {
+    -fx-text-fill: #41564A;
+    -fx-font-weight: bold;
+    -fx-font-family: PoppinsBold;
+    -fx-font-size: 16px;
+}
+
+#welcomeLabel {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: BOLD;
+    -fx-font-family: PoppinsBold;
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+}
+
+#completedVBox {
+    -fx-background-radius: 12px 12px 0px 0px;
+    -fx-background-color: #41564A;
+}
+
+#uncompletedVBox {
+    -fx-background-radius: 12px 12px 0px 0px;
+    -fx-background-color: #8FB8A0;
+}
+
+#employeeVBox {
+    -fx-background-radius: 12px 12px 0px 0px;
+    -fx-background-color: #8FB8A0;
+}
+
+#statisticsVBox {
+    -fx-background-radius: 12px 12px 0px 0px;
+    -fx-background-color: #41564A;
+}
+
+#mainAnchorPane {
+    -fx-background-color: linear-gradient(to top right, #41564A, #73A788);
 }

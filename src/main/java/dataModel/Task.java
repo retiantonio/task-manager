@@ -1,4 +1,4 @@
-package DataModel;
+package dataModel;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -17,7 +17,6 @@ public abstract sealed class Task implements Serializable permits SimpleTask, Co
     private static final long serialVersionUID = 234L;
 
     protected int idTask;
-    private static int id = 0;
 
     protected String statusTask;
     protected String nameTask;
@@ -25,10 +24,8 @@ public abstract sealed class Task implements Serializable permits SimpleTask, Co
     protected LocalTime startHour;
     protected LocalTime endHour;
 
-    public Task(String statusTask, String nameTask) {
-        id++;
-        this.idTask = id;
-
+    public Task(int idTask, String statusTask, String nameTask) {
+        this.idTask = idTask;
         this.statusTask = statusTask;
         this.nameTask = nameTask;
     }
@@ -45,9 +42,8 @@ public abstract sealed class Task implements Serializable permits SimpleTask, Co
     }
 
     public void modifyTaskStatus() {
-        if(statusTask.equals("Completed"))
-            statusTask = "Uncompleted";
-        else statusTask = "Completed";
+        if(statusTask.equals("Uncompleted"))
+            statusTask = "Completed";
     }
 
     public void setTaskName(String nameTask) {
@@ -90,6 +86,4 @@ public abstract sealed class Task implements Serializable permits SimpleTask, Co
     public int getIDTask() {
         return idTask;
     }
-
-
 }

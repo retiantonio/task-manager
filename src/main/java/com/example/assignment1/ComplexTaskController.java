@@ -1,9 +1,10 @@
 package com.example.assignment1;
 
-import BusinessLogic.TaskManagement;
-import DataModel.ComplexTask;
-import DataModel.Employee;
-import DataModel.Task;
+import businessLogic.TaskManagement;
+import dataModel.ComplexTask;
+import dataModel.Employee;
+import dataModel.SimpleTask;
+import dataModel.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ComplexTaskController {
 
@@ -38,13 +40,15 @@ public class ComplexTaskController {
     private Node componentReference;
 
     private List<Task> selectedTasks = new ArrayList<>();
-    private List<TaskController> unassginedTaskControllers = new ArrayList<>();
+    private List<TaskController> unassignedTaskControllers = new ArrayList<>();
+    private List<ComplexTaskController> unassignedComplexTaskControllers = new ArrayList<>();
+    private List<ComplexTagController> complexTagControllers = new ArrayList<>();
     private ComplexTask complexTaskObject;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     private boolean isExisting = false;
-    private boolean isCompleted = false;
+    private boolean needUpdate = false;
 
     @FXML
     public void addAssignedTask(ActionEvent event) throws IOException {
@@ -64,49 +68,87 @@ public class ComplexTaskController {
         stage.showAndWait();
 
         Task selectedTask = controller.getSelectedTask();
-        selectedTasks.add(selectedTask);
-
-        addTaskTag(selectedTask);
+        if(selectedTask != null) {
+            selectedTasks.add(selectedTask);
+            addTaskTag(selectedTask);
+        }
     }
 
     @FXML
     public void saveComplexTask(ActionEvent event) {
         if(isExisting) {
             complexTaskObject.setTaskName(complexTaskTitleTF.getText());
+            needUpdate = true;
         } else {
-            complexTaskObject = new ComplexTask("Uncompleted", complexTaskTitleTF.getText());
+            complexTaskObject = new ComplexTask(taskManagement.generateNewTaskID(), "Uncompleted", complexTaskTitleTF.getText());
             isExisting = true;
         }
 
         for(Task task : selectedTasks) {
             complexTaskObject.addTask(task);
+
+            System.out.println(task.getNameTask());
+            for(Employee employee : taskManagement.getEmployeesWithTask(task))
+                System.out.println(employee.getNameEmployee());
+
             for(Employee employee : taskManagement.getEmployeesWithTask(task)) {
                 taskManagement.assignTaskToEmployee(employee, complexTaskObject);
                 taskManagement.removeTaskFromEmployee(employee, task);
+
+                if(task instanceof SimpleTask)
+                    taskManagement.storeEmployeeSimpleTask(employee, (SimpleTask) task);
+
+                taskManagement.calculateEmployeeWorkDuration(employee);
             }
         }
 
         setAutomaticFeatures();
+        System.out.println(unassignedTaskControllers.size());
     }
 
     @FXML
     private void completeComplexTask(ActionEvent event) {
-        complexTaskObject.modifyTaskStatus();
-        isCompleted = true;
+        if(complexTaskObject != null)
+            complexTaskObject.modifyTaskStatus();
     }
 
     private void addTaskTag(Task task) throws IOException {
-        List<TaskController> unassignedList = new ArrayList<>(unassginedTaskControllers);
+        if(task instanceof SimpleTask) {
+            List<TaskController> unassignedList = new ArrayList<>(unassignedTaskControllers);
 
-        for(TaskController taskController : unassignedList)
-            if(taskController.getTaskObject() == task) {
-                Node component = taskController.getComponentReference();
-                taskController.restoreTask(task);
+            for (TaskController taskController : unassignedList) {
+                if (taskController.getTaskObject() == task) {
+                    Node component = taskController.getComponentReference();
 
-                unassginedTaskControllers.remove(taskController);
+                    unassignedTaskControllers.remove(taskController);
 
-                containedTasksVBox.getChildren().add(component);
+                    containedTasksVBox.getChildren().addFirst(component);
+                }
             }
+        } else {
+            List<ComplexTaskController> unassignedComplexList = new ArrayList<>(unassignedComplexTaskControllers);
+
+            for (ComplexTaskController complexTaskController : unassignedComplexList) {
+                if(complexTaskController.getComplexTaskObject() == task) {
+                    ComplexTagController complexTagController = createComplexTagNode();
+                    complexTagController.restoreComplexTag(task);
+
+                    complexTagControllers.add(complexTagController);
+                }
+            }
+        }
+    }
+
+    private ComplexTagController createComplexTagNode() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("complex-tag.fxml"));
+        Node component = loader.load();
+
+        ComplexTagController controller = loader.getController();
+        complexTagControllers.add(controller);
+
+        containedTasksVBox.getChildren().addFirst(component);
+
+        return controller;
     }
 
     private void restoreTaskTag(Task task) throws IOException {
@@ -114,30 +156,39 @@ public class ComplexTaskController {
         Node component = loader.load();
 
         TaskController controller = loader.getController();
+
         controller.setTaskManagement(taskManagement);
         controller.setComponentReference(component);
-
         controller.restoreTask(task);
 
         containedTasksVBox.getChildren().addFirst(component);
     }
 
+    private void restoreComplexTaskTag(Task task) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("complex-tag.fxml"));
+        Node component = loader.load();
 
+        ComplexTagController controller = loader.getController();
+
+        controller.restoreComplexTag(task);
+
+        containedTasksVBox.getChildren().addFirst(component);
+    }
 
     public void restoreComplexTask(Task task) throws IOException {
         isExisting = true;
 
         complexTaskObject = (ComplexTask) task;
 
-
         selectedTasks = complexTaskObject.getSubTasks();
 
-        if(complexTaskObject.getStatusTask().equals("Completed"))
-            isCompleted = true;
-
         for(Task subTask : selectedTasks)
-            restoreTaskTag(subTask);
+            if(subTask instanceof SimpleTask)
+                restoreTaskTag(subTask);
+            else restoreComplexTaskTag(subTask);
 
+
+        complexTaskTitleTF.setText(complexTaskObject.getNameTask());
         setAutomaticFeatures();
     }
 
@@ -146,10 +197,19 @@ public class ComplexTaskController {
     }
 
     public void setAutomaticFeatures() {
+        try {
             //Sets startHour, endHour, estimatedTime (ALL LABELS)
-        endHourLabel.setText(complexTaskObject.getEndHour().format(formatter));
-        startHourLabel.setText(complexTaskObject.getStartHour().format(formatter));
-        complexEstimatedTimeLabel.setText(complexTaskObject.estimateDuration() + " Minutes");
+            endHourLabel.setText(complexTaskObject.getEndHour().format(formatter));
+            startHourLabel.setText(complexTaskObject.getStartHour().format(formatter));
+
+            int estimateDuration = complexTaskObject.estimateDuration();
+            int hourDuration = estimateDuration / 60;
+            int minutesDuration = estimateDuration % 60;
+
+            complexEstimatedTimeLabel.setText(String.format("%d hours : %d minutes", hourDuration, minutesDuration));
+        } catch(NoSuchElementException e) {
+            System.out.println("No Tasks Added");
+        }
     }
 
     public void setComponentReference(Node componentReference) {
@@ -160,11 +220,36 @@ public class ComplexTaskController {
         return componentReference;
     }
 
-    public boolean isTaskCompleted() {
-        return isCompleted;
+    public void setTaskControllers(List<TaskController> simpleTaskControllers, List<ComplexTaskController> complexTaskControllers) {
+        this.unassignedTaskControllers = simpleTaskControllers;
+        this.unassignedComplexTaskControllers = complexTaskControllers;
     }
 
-    public void setTaskControllers(List<TaskController> simpleTaskControllers) {
-        this.unassginedTaskControllers = simpleTaskControllers;
+    public ComplexTask getComplexTaskObject() {
+        return complexTaskObject;
+    }
+
+    public List<ComplexTagController> getComplexTagControllers() {
+        return complexTagControllers;
+    }
+
+    public boolean needUpdate() {
+        return needUpdate;
+    }
+
+    public void resetUpdateNeeds() {
+        needUpdate = false;
+    }
+
+    public void printList() {
+        System.out.println("In Complex: " + unassignedTaskControllers.size());
+    }
+
+    public boolean isCompleted() {
+        if(complexTaskObject != null)
+            if(complexTaskObject.getStatusTask().equals("Completed"))
+                return true;
+
+        return false;
     }
 }

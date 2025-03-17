@@ -1,18 +1,20 @@
 package com.example.assignment1;
 
-import BusinessLogic.TaskManagement;
+import businessLogic.TaskManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class OpeningController {
+
+    @FXML private TextField nameTextField;
 
     private TaskManagement taskManagement;
 
@@ -23,6 +25,8 @@ public class OpeningController {
 
         MainAppController controller = loader.getController();
         controller.setTaskManagement(taskManagement);
+
+        controller.setUpWelcomeLabel(nameTextField.getText());
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 

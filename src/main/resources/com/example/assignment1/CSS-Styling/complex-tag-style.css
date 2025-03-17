@@ -1,0 +1,10 @@
+#complexTagMainHBox {
+    -fx-background-color: D9D9D9;
+    -fx-background-radius: 12px;
+}
+
+#complexTagNameLabel {
+    -fx-text-fill: #746D6D;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

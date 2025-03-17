@@ -1,6 +1,6 @@
-package DataAccess;
+package dataAccess;
 
-import BusinessLogic.TaskManagement;
+import businessLogic.TaskManagement;
 
 import java.io.*;
 

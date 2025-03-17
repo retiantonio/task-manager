@@ -39,7 +39,7 @@
                               <Font name="Monospaced Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Label fx:id="infoLabel" layoutX="12.0" layoutY="14.0" prefHeight="100.0" prefWidth="221.0" stylesheets="@OpeningStyle.css" text="Task Master is an app designed for scheduling and assigning tasks for your employees. Let’s manage some tasks!" textAlignment="CENTER" wrapText="true">
+                        <Label fx:id="infoLabel" alignment="CENTER" layoutX="12.0" layoutY="14.0" prefHeight="100.0" prefWidth="221.0" stylesheets="@OpeningStyle.css" text="Task Master is an app designed for scheduling and assigning tasks for your employees. Let’s manage some tasks!" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="Monospaced Regular" size="14.0" />
                            </font>

@@ -1,4 +1,4 @@
-package DataModel;
+package dataModel;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -15,14 +15,13 @@ public class Employee implements Serializable {
     private static final long serialVersionUID = 449L;
 
     private int idEmployee;
+    private int workDuration = -2;
+
     private String nameEmployee;
 
-    private static int id = 0;
-
-    public Employee(String nameEmployee) {
+    public Employee(int idEmployee, String nameEmployee) {
         this.nameEmployee = nameEmployee;
-        id++;
-        idEmployee = id;
+        this.idEmployee = idEmployee;
     }
 
     public String getNameEmployee() {
@@ -52,5 +51,17 @@ public class Employee implements Serializable {
             return false;
 
         return Objects.equals(nameEmployee, ((Employee)obj).nameEmployee);
+    }
+
+    public void setWorkDuration(int workDuration) {
+        this.workDuration = workDuration;
+    }
+
+    public int getWorkDuration() {
+        return workDuration;
+    }
+
+    public void setNameEmployee(String nameEmployee) {
+        this.nameEmployee = nameEmployee;
     }
 }
