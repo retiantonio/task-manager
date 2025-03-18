@@ -243,7 +243,7 @@ public class MainAppController {
     public void setUpWelcomeLabel(String name) {
         if(name.isBlank()) {
             welcomeLabel.setText("Welcome back, manager!\nStart managing your employees right now using Task Master!");
-        } else welcomeLabel.setText("Welcome back, manager " + name + "!\n Start managing your employees right now using Task Master!");
+        } else welcomeLabel.setText("Welcome back, " + name + "!\n Start managing your employees right now using Task Master!");
     }
 
     private void startUpdateThread() {

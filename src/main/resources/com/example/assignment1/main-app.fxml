@@ -27,7 +27,12 @@
                         <Image url="@photo-1628945975014-63bf1017ae01%201%20(1).png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="102.0" layoutY="719.0" text="Developed and Designed by Reti Antonio" textFill="WHITE">
+                  <AnchorPane fx:id="dataAnchorPane" layoutX="59.0" layoutY="112.0" prefHeight="293.0" prefWidth="299.0" style="-fx-background-color: #FFFFFF;">
+                     <children>
+                        <Label fx:id="welcomeLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="24.0" prefHeight="223.0" prefWidth="288.0" text="Name Input" textAlignment="CENTER" wrapText="true" />
+                        <Label fx:id="mainAppInfoAndHelpLabel" layoutX="1.0" layoutY="248.0" opacity="0.75" prefWidth="333.0" text="For any issues when using Task Master please contact: retiantonio1@gmail.com" textAlignment="CENTER" wrapText="true" />
+                     </children></AnchorPane>
+                  <Label layoutX="102.0" layoutY="719.0" opacity="0.5" text="Developed and Designed by Reti Antonio" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -42,7 +47,6 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="welcomeLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="67.0" layoutY="78.0" prefHeight="335.0" prefWidth="310.0" text="Label" textAlignment="CENTER" wrapText="true" />
                </children></Pane>
          </left>
          <top>
