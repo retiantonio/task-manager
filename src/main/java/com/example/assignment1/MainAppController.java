@@ -202,7 +202,6 @@ public class MainAppController {
         createEmployeeControllers.add(controller);
 
         employeeVBox.getChildren().add(component);
-        System.out.println("Employee Added");
 
         return controller;
     }

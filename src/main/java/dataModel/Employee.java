@@ -39,6 +39,7 @@ public class Employee implements Serializable {
         SimpleStringProperty nameEmployeeProperty = new SimpleStringProperty(nameEmployee);
         return nameEmployeeProperty;
     }
+
     public int hashCode() {
         return Objects.hash(nameEmployee);
     }
