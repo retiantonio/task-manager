@@ -1,8 +1,7 @@
 package com.example.assignment1;
 
-import BusinessLogic.TaskManagement;
-import DataAccess.AppSerialization;
-import DataModel.Task;
+import businessLogic.TaskManagement;
+import dataAccess.AppSerialization;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -25,6 +23,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         try {
             taskManagement = AppSerialization.deserializeData();
+            System.out.println("After Deserialization: " + taskManagement.getTaskMap().keySet());
             System.out.println("Data Deserialized");
         } catch (IOException e) {
             System.out.println("Data could not be Deserialized");
@@ -49,7 +48,6 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         AppSerialization.serializeData(taskManagement);
-        System.out.println("Data Serialized");
     }
 
     private void setStage(Stage stage) {

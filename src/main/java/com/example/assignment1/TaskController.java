@@ -1,10 +1,9 @@
 package com.example.assignment1;
 
-import BusinessLogic.TaskManagement;
-import DataModel.Employee;
-import DataModel.SimpleTask;
-import DataModel.Task;
-import javafx.animation.FadeTransition;
+import businessLogic.TaskManagement;
+import dataModel.Employee;
+import dataModel.SimpleTask;
+import dataModel.Task;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -15,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.text.ParseException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -32,26 +31,33 @@ import java.util.List;
 
 public class TaskController {
 
-    @FXML private VBox employeeVBox;
+    @FXML private VBox taskEmployeeVBox;
 
     @FXML private TextField startHourTF;
     @FXML private TextField endHourTF;
     @FXML private TextField taskTitleTF;
 
+    @FXML private Label estimatedTimeLabel;
+
     private TaskManagement taskManagement;
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+    private boolean isExisting = false;
+
+    private SimpleTask taskObject;
+
+    private Node componentReference;
 
     private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
     private List<Employee> selectedEmployees = new ArrayList<>();
-
-    @FXML
-    private void initialize() {}
 
     @FXML
     public void addEmployeeToTask(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeSelection.fxml"));
         Parent root = loader.load();
 
-        employeeList = FXCollections.observableArrayList(new ArrayList<>(taskManagement.getEmployeeSet()));
+        employeeList = FXCollections.observableArrayList(new ArrayList<>(taskManagement.getEmployees()));
 
         EmployeeSelectController controller = loader.getController();
         controller.setEmployeeList(employeeList);
@@ -64,16 +70,16 @@ public class TaskController {
         stage.showAndWait();
 
         Employee selectedEmployee = controller.getSelectedEmployee();
-        selectedEmployees.add(selectedEmployee);
-
-        addUIComponent(selectedEmployee);
+        if(selectedEmployee != null) {
+            selectedEmployees.add(selectedEmployee);
+            addEmployeeTag(selectedEmployee);
+        }
     }
 
     @FXML
     public void saveTask(ActionEvent event) {
         LocalTime startHour;
         LocalTime endHour;
-        Task task;
 
         boolean isItFirst = true;
 
@@ -82,18 +88,35 @@ public class TaskController {
             isItFirst = false;
             endHour = parseTime(endHourTF.getText());
 
-            task = new SimpleTask("Uncompleted", taskTitleTF.getText(), startHour, endHour);
-            for(Employee employee : selectedEmployees)
-                taskManagement.assignTaskToEmployee(employee, task);
+            if(isExisting) {
+                taskObject.setTaskName(taskTitleTF.getText());
+                taskObject.setStartHour(startHour);
+                taskObject.setEndHour(endHour);
+            } else {
+                taskObject = new SimpleTask(taskManagement.generateNewTaskID(), "Uncompleted", taskTitleTF.getText(), startHour, endHour);
+                isExisting = true;
+            }
+
+            for(Employee employee : selectedEmployees) {
+                taskManagement.assignTaskToEmployee(employee, taskObject);
+                taskManagement.storeEmployeeSimpleTask(employee, taskObject);
+                taskManagement.calculateEmployeeWorkDuration(employee);
+            }
+
+            setEstimatedTimeLabel();
         } catch (ParseException | DateTimeParseException exception) {
             inputExceptionAnimation(isItFirst);
         }
         System.out.println("Task Saved");
     }
 
+    @FXML
+    private void completeTask(ActionEvent event) {
+       if(taskObject != null)
+            taskObject.modifyTaskStatus();
+    }
 
-
-    public void addUIComponent(Employee employee) throws IOException {
+    public void addEmployeeTag(Employee employee) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Employee.fxml"));
 
         Node component = fxmlLoader.load();
@@ -101,15 +124,29 @@ public class TaskController {
         EmployeeController controller = fxmlLoader.getController();
         controller.setEmployeeLabel(employee.getNameEmployee());
 
-        employeeVBox.getChildren().addFirst(component);
+        taskEmployeeVBox.getChildren().addFirst(component);
     }
 
-    public void setTaskManagement(TaskManagement taskManagement) {
-        this.taskManagement = taskManagement;
+    public void restoreTask(Task task) throws IOException {
+        isExisting = true;
+
+        taskObject = (SimpleTask) task;
+
+        selectedEmployees = taskManagement.getEmployeesStoredForSimpleTask((SimpleTask) task);
+
+        if(selectedEmployees != null)
+            for(Employee employee : selectedEmployees)
+                addEmployeeTag(employee);
+
+        taskTitleTF.setText(task.getNameTask());
+
+        startHourTF.setText(task.getStartHour().format(formatter));
+        endHourTF.setText(task.getEndHour().format(formatter));
+
+        setEstimatedTimeLabel();
     }
 
     private LocalTime parseTime(String input) throws ParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return LocalTime.parse(input, formatter);
     }
 
@@ -160,5 +197,39 @@ public class TaskController {
         }
 
         return false;
+    }
+
+    public void setTaskManagement(TaskManagement taskManagement) {
+        this.taskManagement = taskManagement;
+    }
+
+    public void setEstimatedTimeLabel() {
+        estimatedTimeLabel.setText(taskObject.estimateDuration() + " Minutes");
+
+        int estimateDuration = taskObject.estimateDuration();
+        int hourDuration = estimateDuration / 60;
+        int minutesDuration = estimateDuration % 60;
+
+        estimatedTimeLabel.setText(String.format("%d hours : %d minutes", hourDuration, minutesDuration));
+    }
+
+    public void setComponentReference(Node component) {
+        componentReference = component;
+    }
+
+    public Node getComponentReference() {
+        return componentReference;
+    }
+
+    public boolean isCompleted() {
+        if(taskObject != null)
+            if(taskObject.getStatusTask().equals("Completed"))
+                return true;
+
+        return false;
+    }
+
+    public SimpleTask getTaskObject() {
+        return taskObject;
     }
 }

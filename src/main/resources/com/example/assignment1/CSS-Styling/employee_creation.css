@@ -1,23 +1,47 @@
 #createEmployeeVBox {
     -fx-padding: 10 10 10 10;
-    -fx-background-color: #41564A;
+    -fx-background-color: #66987A;
     -fx-background-radius: 12px;
 }
 
 #createEmployeeTF {
     -fx-background-color: transparent;
 
-    -fx-prompt-text-fill: #73A788;
-    -fx-text-fill: #73A788;
+    -fx-prompt-text-fill: #2F3C35;
+    -fx-text-fill: #2F3C35;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
+#createEmployeeLabel {
+    -fx-text-fill: #41564A;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+#createEmployeeUncompletedLabel {
+    -fx-text-fill: #41564A;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+#createEmployeeCompletedLabel {
+    -fx-text-fill: #41564A;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+#createEmployeeWorkDurationLabel {
+    -fx-text-fill: #41564A;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
 #createEmployeeButton {
-    -fx-background-color: linear-gradient(to right top, #73A788, #87DAA9);
+    -fx-background-color: linear-gradient(to right top, #2F3C35, #537F65);
     -fx-background-radius: 8px;
 
     -fx-font-weight: bold;
     -fx-font-size: 12px;
-    -fx-text-fill: #41564A;
+    -fx-text-fill: #9CE8BB;
 }
