@@ -6,7 +6,9 @@ tracking, task time planning and interactive UI components.
 
 <h2>App Design / Screenshots</h2>
 
-<h3>"Auth" Menu</h3>
+Designed in Figma.
+
+<h3>Welcome Menu</h3>
 
 ![Auth Menu](screenshots/taskmanagerlogin.png)
 
